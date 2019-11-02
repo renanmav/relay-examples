@@ -4,22 +4,27 @@ import {useLazyLoadQuery, graphql} from 'react-relay/hooks';
 
 import type {TodoRootQueryResponse} from 'relay/TodoRootQuery.graphql';
 
+import TodoApp from './TodoApp';
+
 const TodoRoot = () => {
   const {user}: TodoRootQueryResponse = useLazyLoadQuery(
     graphql`
       query TodoRootQuery($id: String) {
         user(id: $id) {
-          id
+          ...TodoApp_user
         }
       }
     `,
     {id: 'me'},
   );
-  return <div>{user.id}</div>;
+
+  return <TodoApp user={user} />;
 };
 
+const Loading = () => <div>Loading</div>;
+
 const TodoRootWrapper = () => (
-  <React.Suspense fallback={() => <div>Loading</div>}>
+  <React.Suspense fallback={Loading}>
     <TodoRoot />
   </React.Suspense>
 );
