@@ -8,6 +8,7 @@
 
 /*::
 import type { ReaderFragment } from 'relay-runtime';
+import type { TodoList_user$ref } from "./TodoList_user.graphql";
 import type { FragmentReference } from "relay-runtime";
 declare export opaque type TodoApp_user$ref: FragmentReference;
 declare export opaque type TodoApp_user$fragmentType: TodoApp_user$ref;
@@ -15,6 +16,7 @@ export type TodoApp_user = {|
   +id: string,
   +userId: string,
   +totalCount: number,
+  +$fragmentRefs: TodoList_user$ref,
   +$refType: TodoApp_user$ref,
 |};
 export type TodoApp_user$data = TodoApp_user;
@@ -52,9 +54,14 @@ const node/*: ReaderFragment*/ = {
       "name": "totalCount",
       "args": null,
       "storageKey": null
+    },
+    {
+      "kind": "FragmentSpread",
+      "name": "TodoList_user",
+      "args": null
     }
   ]
 };
 // prettier-ignore
-(node/*: any*/).hash = 'cce226384611b9055e1f41c4b0de97aa';
+(node/*: any*/).hash = 'a24b17104b35de68e32309ab69d54ef7';
 module.exports = node;
