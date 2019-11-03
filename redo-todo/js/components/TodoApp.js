@@ -8,6 +8,7 @@ import type {TodoApp_user$key} from 'relay/TodoApp_user.graphql';
 
 import TodoList from './TodoList';
 import TodoTextInput from './TodoTextInput';
+import TodoListFooter from './TodoListFooter';
 
 type Props = {|
   user: ?TodoApp_user$key,
@@ -23,6 +24,7 @@ const TodoApp = (props: Props) => {
         userId
         totalCount
         ...TodoList_user
+        ...TodoListFooter_user
       }
     `,
     props.user,
@@ -32,6 +34,8 @@ const TodoApp = (props: Props) => {
     AddTodoMutation.commit(environment, text, user);
     return;
   };
+
+  const hasTodos = user.totalCount > 0;
 
   return (
     <div>
@@ -47,7 +51,7 @@ const TodoApp = (props: Props) => {
         </header>
 
         <TodoList user={user} />
-        {/* {hasTodos && <TodoListFooter user={user} />} */}
+        {hasTodos && <TodoListFooter user={user} />}
       </section>
 
       <footer className="info">

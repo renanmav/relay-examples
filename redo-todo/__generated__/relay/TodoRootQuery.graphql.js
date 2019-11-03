@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 3c220aef9c0d4766b3b3c8090da09643
+ * @relayHash 89f13e69d603df9f6a9b5c19416684b1
  */
 
 /* eslint-disable */
@@ -40,6 +40,28 @@ fragment TodoApp_user on User {
   userId
   totalCount
   ...TodoList_user
+  ...TodoListFooter_user
+}
+
+fragment TodoListFooter_user on User {
+  id
+  userId
+  completedCount
+  todos(first: 2147483647) {
+    edges {
+      node {
+        id
+        complete
+        __typename
+      }
+      cursor
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
+  totalCount
 }
 
 fragment TodoList_user on User {
@@ -276,7 +298,7 @@ return {
     "operationKind": "query",
     "name": "TodoRootQuery",
     "id": null,
-    "text": "query TodoRootQuery(\n  $id: String\n) {\n  user(id: $id) {\n    ...TodoApp_user\n    id\n  }\n}\n\nfragment TodoApp_user on User {\n  id\n  userId\n  totalCount\n  ...TodoList_user\n}\n\nfragment TodoList_user on User {\n  todos(first: 2147483647) {\n    edges {\n      node {\n        id\n        complete\n        ...Todo_todo\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n  userId\n  completedCount\n  totalCount\n  ...Todo_user\n}\n\nfragment Todo_todo on Todo {\n  complete\n  id\n  text\n}\n\nfragment Todo_user on User {\n  id\n  userId\n  totalCount\n  completedCount\n}\n",
+    "text": "query TodoRootQuery(\n  $id: String\n) {\n  user(id: $id) {\n    ...TodoApp_user\n    id\n  }\n}\n\nfragment TodoApp_user on User {\n  id\n  userId\n  totalCount\n  ...TodoList_user\n  ...TodoListFooter_user\n}\n\nfragment TodoListFooter_user on User {\n  id\n  userId\n  completedCount\n  todos(first: 2147483647) {\n    edges {\n      node {\n        id\n        complete\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  totalCount\n}\n\nfragment TodoList_user on User {\n  todos(first: 2147483647) {\n    edges {\n      node {\n        id\n        complete\n        ...Todo_todo\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n  userId\n  completedCount\n  totalCount\n  ...Todo_user\n}\n\nfragment Todo_todo on Todo {\n  complete\n  id\n  text\n}\n\nfragment Todo_user on User {\n  id\n  userId\n  totalCount\n  completedCount\n}\n",
     "metadata": {}
   }
 };
