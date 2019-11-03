@@ -20,6 +20,7 @@ import {
 
 import type {Todo_todo} from 'relay/Todo_todo.graphql';
 import type {Todo_user} from 'relay/Todo_user.graphql';
+
 import type {
   ChangeTodoStatusInput,
   ChangeTodoStatusMutationResponse,

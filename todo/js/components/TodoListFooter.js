@@ -14,22 +14,48 @@
 import RemoveCompletedTodosMutation from '../mutations/RemoveCompletedTodosMutation';
 
 import React from 'react';
-import {graphql, createFragmentContainer, type RelayProp} from 'react-relay';
-import type {TodoListFooter_user} from 'relay/TodoListFooter_user.graphql';
+import {graphql, useFragment, useRelayEnvironment} from 'react-relay/hooks';
+
+import type {
+  TodoListFooter_user$key,
+  TodoListFooter_user,
+} from 'relay/TodoListFooter_user.graphql';
+
 type Todos = $NonMaybeType<$ElementType<TodoListFooter_user, 'todos'>>;
 type Edges = $NonMaybeType<$ElementType<Todos, 'edges'>>;
 type Edge = $NonMaybeType<$ElementType<Edges, number>>;
 
 type Props = {|
-  +relay: RelayProp,
-  +user: TodoListFooter_user,
+  user: TodoListFooter_user$key,
 |};
 
-const TodoListFooter = ({
-  relay,
-  user,
-  user: {todos, completedCount, totalCount},
-}: Props) => {
+const TodoListFooter = (props: Props) => {
+  const environment = useRelayEnvironment();
+
+  const user = useFragment(
+    graphql`
+      fragment TodoListFooter_user on User {
+        id
+        userId
+        completedCount
+        todos(
+          first: 2147483647 # max GraphQLInt
+        ) @connection(key: "TodoList_todos") {
+          edges {
+            node {
+              id
+              complete
+            }
+          }
+        }
+        totalCount
+      }
+    `,
+    props.user,
+  );
+
+  const {todos, completedCount, totalCount} = user;
+
   const completedEdges: $ReadOnlyArray<?Edge> =
     todos && todos.edges
       ? todos.edges.filter(
@@ -39,7 +65,7 @@ const TodoListFooter = ({
 
   const handleRemoveCompletedTodosClick = () => {
     RemoveCompletedTodosMutation.commit(
-      relay.environment,
+      environment,
       {
         edges: completedEdges,
       },
@@ -67,23 +93,4 @@ const TodoListFooter = ({
   );
 };
 
-export default createFragmentContainer(TodoListFooter, {
-  user: graphql`
-    fragment TodoListFooter_user on User {
-      id
-      userId
-      completedCount
-      todos(
-        first: 2147483647 # max GraphQLInt
-      ) @connection(key: "TodoList_todos") {
-        edges {
-          node {
-            id
-            complete
-          }
-        }
-      }
-      totalCount
-    }
-  `,
-});
+export default TodoListFooter;

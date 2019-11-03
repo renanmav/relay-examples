@@ -25,8 +25,8 @@ export type TodoList_user = {|
   |},
   +id: string,
   +userId: string,
-  +totalCount: number,
   +completedCount: number,
+  +totalCount: number,
   +$fragmentRefs: Todo_user$ref,
   +$refType: TodoList_user$ref,
 |};
@@ -160,14 +160,14 @@ return {
     {
       "kind": "ScalarField",
       "alias": null,
-      "name": "totalCount",
+      "name": "completedCount",
       "args": null,
       "storageKey": null
     },
     {
       "kind": "ScalarField",
       "alias": null,
-      "name": "completedCount",
+      "name": "totalCount",
       "args": null,
       "storageKey": null
     },
@@ -180,5 +180,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '4c169798c328a2b4d9b4ae5227d016bb';
+(node/*: any*/).hash = 'f518be6e6bae6e8c13156f5ec30a2b34';
 module.exports = node;

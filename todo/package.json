@@ -14,9 +14,9 @@
     "graphql": "^14.5.8",
     "graphql-relay": "^0.6.0",
     "prop-types": "^15.7.2",
-    "react": "^16.10.2",
-    "react-dom": "^16.10.2",
-    "react-relay": "^6.0.0",
+    "react": "16.9.0",
+    "react-dom": "16.9.0",
+    "react-relay": "^7.0.0",
     "todomvc-app-css": "^2.2.0",
     "todomvc-common": "^1.0.3",
     "whatwg-fetch": "3.0.0"
@@ -45,7 +45,7 @@
     "flow-bin": "^0.109.0",
     "flow-typed": "^2.6.0",
     "prettier": "^1.16.4",
-    "relay-compiler": "^6.0.0",
+    "relay-compiler": "^7.0.0",
     "webpack": "^4.41.0",
     "webpack-dev-server": "^3.8.2"
   },

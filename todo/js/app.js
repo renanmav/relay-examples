@@ -16,7 +16,7 @@ import 'todomvc-common';
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 
-import {QueryRenderer, graphql} from 'react-relay';
+import {RelayEnvironmentProvider} from 'react-relay/hooks';
 import {
   Environment,
   Network,
@@ -26,8 +26,7 @@ import {
   type Variables,
 } from 'relay-runtime';
 
-import TodoApp from './components/TodoApp';
-import type {appQueryResponse} from 'relay/appQuery.graphql';
+import TodoRoot from './components/TodoRoot';
 
 async function fetchQuery(
   operation: RequestNode,
@@ -56,29 +55,9 @@ const rootElement = document.getElementById('root');
 
 if (rootElement) {
   ReactDOM.render(
-    <QueryRenderer
-      environment={modernEnvironment}
-      query={graphql`
-        query appQuery($userId: String) {
-          user(id: $userId) {
-            ...TodoApp_user
-          }
-        }
-      `}
-      variables={{
-        // Mock authenticated ID that matches database
-        userId: 'me',
-      }}
-      render={({error, props}: {error: ?Error, props: ?appQueryResponse}) => {
-        if (props && props.user) {
-          return <TodoApp user={props.user} />;
-        } else if (error) {
-          return <div>{error.message}</div>;
-        }
-
-        return <div>Loading</div>;
-      }}
-    />,
+    <RelayEnvironmentProvider environment={modernEnvironment}>
+      <TodoRoot />
+    </RelayEnvironmentProvider>,
     rootElement,
   );
 }

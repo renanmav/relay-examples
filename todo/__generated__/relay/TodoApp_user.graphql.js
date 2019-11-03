@@ -17,7 +17,7 @@ export type TodoApp_user = {|
   +id: string,
   +userId: string,
   +totalCount: number,
-  +$fragmentRefs: TodoListFooter_user$ref & TodoList_user$ref,
+  +$fragmentRefs: TodoList_user$ref & TodoListFooter_user$ref,
   +$refType: TodoApp_user$ref,
 |};
 export type TodoApp_user$data = TodoApp_user;
@@ -58,16 +58,16 @@ const node/*: ReaderFragment*/ = {
     },
     {
       "kind": "FragmentSpread",
-      "name": "TodoListFooter_user",
+      "name": "TodoList_user",
       "args": null
     },
     {
       "kind": "FragmentSpread",
-      "name": "TodoList_user",
+      "name": "TodoListFooter_user",
       "args": null
     }
   ]
 };
 // prettier-ignore
-(node/*: any*/).hash = '2b7e5675921fb837e60dedfe29de4d93';
+(node/*: any*/).hash = '04dd1906d868ade12df54e87afcffab2';
 module.exports = node;
