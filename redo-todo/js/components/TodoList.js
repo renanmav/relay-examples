@@ -1,6 +1,10 @@
-import React from 'react';
+// @flow
+import MarkAllTodosMutation from '../mutations/MarkAllTodosMutation';
 
+import React from 'react';
 import {useFragment, graphql, useRelayEnvironment} from 'react-relay/hooks';
+
+import Todo from './Todo';
 
 import type {
   TodoList_user$key,
@@ -19,7 +23,7 @@ type Props = {|
 const TodoList = (props: Props) => {
   const environment = useRelayEnvironment();
 
-  const user = useFragment(
+  const user: TodoList_user = useFragment(
     graphql`
       fragment TodoList_user on User {
         todos(
@@ -29,12 +33,15 @@ const TodoList = (props: Props) => {
             node {
               id
               complete
+              ...Todo_todo
             }
           }
         }
         id
         userId
         completedCount
+        totalCount
+        ...Todo_user
       }
     `,
     props.user,
@@ -71,8 +78,7 @@ const TodoList = (props: Props) => {
 
       <ul className="todo-list">
         {nodes.map((node: Node) => (
-          // <Todo key={node.id} todo={node} user={user} />
-          <div>{node.id}</div>
+          <Todo key={node.id} todo={node} user={user} />
         ))}
       </ul>
     </section>

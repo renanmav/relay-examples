@@ -8,6 +8,8 @@
 
 /*::
 import type { ReaderFragment } from 'relay-runtime';
+import type { Todo_todo$ref } from "./Todo_todo.graphql";
+import type { Todo_user$ref } from "./Todo_user.graphql";
 import type { FragmentReference } from "relay-runtime";
 declare export opaque type TodoList_user$ref: FragmentReference;
 declare export opaque type TodoList_user$fragmentType: TodoList_user$ref;
@@ -17,12 +19,15 @@ export type TodoList_user = {|
       +node: ?{|
         +id: string,
         +complete: boolean,
+        +$fragmentRefs: Todo_todo$ref,
       |}
     |}>
   |},
   +id: string,
   +userId: string,
   +completedCount: number,
+  +totalCount: number,
+  +$fragmentRefs: Todo_user$ref,
   +$refType: TodoList_user$ref,
 |};
 export type TodoList_user$data = TodoList_user;
@@ -100,6 +105,11 @@ return {
                   "name": "__typename",
                   "args": null,
                   "storageKey": null
+                },
+                {
+                  "kind": "FragmentSpread",
+                  "name": "Todo_todo",
+                  "args": null
                 }
               ]
             },
@@ -153,10 +163,22 @@ return {
       "name": "completedCount",
       "args": null,
       "storageKey": null
+    },
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "totalCount",
+      "args": null,
+      "storageKey": null
+    },
+    {
+      "kind": "FragmentSpread",
+      "name": "Todo_user",
+      "args": null
     }
   ]
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'dc947db0ba10bdc5d4c4c15cc5e689f1';
+(node/*: any*/).hash = 'f518be6e6bae6e8c13156f5ec30a2b34';
 module.exports = node;

@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 
 import {useLazyLoadQuery, graphql} from 'react-relay/hooks';
@@ -24,7 +25,7 @@ const TodoRoot = () => {
 const Loading = () => <div>Loading</div>;
 
 const TodoRootWrapper = () => (
-  <React.Suspense fallback={Loading}>
+  <React.Suspense fallback={<Loading />}>
     <TodoRoot />
   </React.Suspense>
 );

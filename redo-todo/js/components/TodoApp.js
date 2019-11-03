@@ -1,12 +1,13 @@
+// @flow
 import React from 'react';
 import {useFragment, graphql} from 'react-relay/hooks';
 
-import TodoList from './TodoList';
-
 import type {TodoApp_user$key} from 'relay/TodoApp_user.graphql';
 
+import TodoList from './TodoList';
+
 type Props = {|
-  user: TodoApp_user$key,
+  user: ?TodoApp_user$key,
 |};
 
 const TodoApp = (props: Props) => {
