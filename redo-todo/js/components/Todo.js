@@ -1,6 +1,7 @@
 // @flow
 import ChangeTodoStatusMutation from '../mutations/ChangeTodoStatusMutation';
 import RemoveTodoMutation from '../mutations/RemoveTodoMutation';
+import RenameTodoMutation from '../mutations/RenameTodoMutation';
 
 import React, {useState} from 'react';
 import {graphql, useFragment, useRelayEnvironment} from 'react-relay/hooks';
@@ -8,6 +9,8 @@ import classnames from 'classnames';
 
 import type {Todo_todo$key} from 'relay/Todo_todo.graphql';
 import type {Todo_user$key} from 'relay/Todo_user.graphql';
+
+import TodoTextInput from './TodoTextInput';
 
 type Props = {|
   todo: Todo_todo$key,
@@ -56,7 +59,7 @@ const Todo = (props: Props) => {
 
   const handleTextInputSave = (text: string) => {
     setIsEditing(false);
-    // RenameTodoMutation.commit(environment, text, todo);
+    RenameTodoMutation.commit(environment, text, todo);
   };
 
   const removeTodo = () => RemoveTodoMutation.commit(environment, todo, user);
@@ -79,7 +82,7 @@ const Todo = (props: Props) => {
         <button className="destroy" onClick={handleDestroyClick} />
       </div>
 
-      {/* {isEditing && (
+      {isEditing && (
         <TodoTextInput
           className="edit"
           commitOnBlur={true}
@@ -88,7 +91,7 @@ const Todo = (props: Props) => {
           onDelete={handleTextInputDelete}
           onSave={handleTextInputSave}
         />
-      )} */}
+      )}
     </li>
   );
 };

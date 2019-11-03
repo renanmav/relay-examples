@@ -1,16 +1,21 @@
 // @flow
+import AddTodoMutation from '../mutations/AddTodoMutation';
+
 import React from 'react';
-import {useFragment, graphql} from 'react-relay/hooks';
+import {useFragment, graphql, useRelayEnvironment} from 'react-relay/hooks';
 
 import type {TodoApp_user$key} from 'relay/TodoApp_user.graphql';
 
 import TodoList from './TodoList';
+import TodoTextInput from './TodoTextInput';
 
 type Props = {|
   user: ?TodoApp_user$key,
 |};
 
 const TodoApp = (props: Props) => {
+  const environment = useRelayEnvironment();
+
   const user = useFragment(
     graphql`
       fragment TodoApp_user on User {
@@ -23,17 +28,22 @@ const TodoApp = (props: Props) => {
     props.user,
   );
 
+  const handleTextInputSave = (text: string) => {
+    AddTodoMutation.commit(environment, text, user);
+    return;
+  };
+
   return (
     <div>
       <section className="todoapp">
         <header className="header">
           <h1>todos</h1>
 
-          {/* <TodoTextInput
+          <TodoTextInput
             className="new-todo"
             onSave={handleTextInputSave}
             placeholder="What needs to be done?"
-          /> */}
+          />
         </header>
 
         <TodoList user={user} />
